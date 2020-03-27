@@ -1,0 +1,42 @@
+---
+title: "Bazy danych: sylabus"
+author: "Tomasz Przechlewski"
+date: "27 03 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 0. Informacje organizacyjne
+
+Materiały są dostępne pod adresem: https://github.com/hrpunio/BazyDanych_2020
+Można je pobrać klikając w zielony przycisk i wybierając
+`Download ZIP'.
+
+Kontakt: tprzechlewski@gmail.com
+
+## 1. Problem składowania i przetwarzania dużej ilości danych. 
+
+## 2. Arkusze kalkulacyjne a bazy danych.
+
+## 3. Bazy danych i ich rodzaje. Relacyjne bazy danych. 
+
+## 4. Zastosowania programu SQLite do zarządzania informacją. 
+
+Tworzenie i modyfikacja struktury bazy danych. Importowanie danych.
+Podstawowe instrukcje SQL i ich składnia. Wyszukiwanie informacji za pomocą strukturalnego
+języka zapytań SQL. Tworzenie zapytań. 
+
+## 5. Bazy nietransakcyjne
+
+Business Intelligence. Hurtownie danych. Bazy typu NOSQL.
+
+notatki do wykładu: bazy-danych-intro.pdf oraz bazy-danych-sqlite.pdf
+
+
+## Zaliczenie ćwiczeń: projekt
+
+Mam nadzieję że wrócimy do szkoły w kwietniu i wymagania odnośnie
+projekt przedstawię na zajęciach 

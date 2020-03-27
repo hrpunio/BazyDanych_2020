@@ -1,0 +1,39 @@
+See the following tables:
+
+https://www.sqlitetutorial.net/sqlite-inner-join/
+
+--
+-- Proste z³±czenie 2x tabele
+
+SELECT albums.Title, artists.Name FROM
+   albums
+[INNER] JOIN artists on artists.artistId = albums.artistId;
+
+
+--
+-- zlaczenie 3x tabele
+tracks
+albums
+artists
+
+One track belongs to one album and one album have many tracks. The
+tracks table associated with the albums table via albumid column.
+
+One album belongs to one artist and one artist has one or many
+albums. The albums table links to the artists table via artistid
+column.
+
+To query data from these tables, you need to use two inner join
+clauses in the SELECT statement as follows:
+
+-- for each track print albumtitle and artistname
+
+SELECT
+    trackid,
+    tracks.name AS track,
+    albums.title AS album,
+    artists.name AS artist
+FROM
+    tracks
+    INNER JOIN albums ON albums.albumid = tracks.albumid
+    INNER JOIN artists ON artists.artistid = albums.artistid;

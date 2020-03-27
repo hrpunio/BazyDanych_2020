@@ -1,0 +1,43 @@
+Utworzenie schematu
+--------------------
+create table
+
+Import danych
+-------------
+
+Elektrownie wg kontynentów
+-------------------------
+GROUP BY (avg/sum/count/min/max)
+Elektrownie wg kontynentów
+sqlite> select cc.continentname, count(cc.continentname) from pp, cc where pp.co
+de = cc.countrycode3 group by cc.continentname;
+
+£±czna moc wg/kontynentów
+sqlite> select cc.continentname, count(cc.continentname) from pp, cc where pp.co
+de = cc.countrycode3 group by cc.continentname;
+
+£±czna moc wg/kontynentów elektrowni solarnych
+sqlite> select cc.continentname, sum(pp.capacityMW) from pp, cc where pp.code =
+cc.countrycode3 and pp.fuel="Solar"  group by cc.continentname;
+
+£±czna moc wg/pañstw elektrowni solarnych
+
+select pp.country, sum(pp.capacityMW) from pp where pp.fuel="solar"
+  group by pp.country;
+
+Liczba elektrowni solarnych
+select pp.country, count(pp.country) from pp where pp.fuel="solar"
+  group by pp.country;
+
+Liczba elektrowni solarnych wiêksza od (as = alias)
+select pp.country, sum(pp.capacityMW) as ppsc from pp where pp.fuel="solar"
+  group by pp.country having ppsc > 2;
+
+select pp.country, sum(pp.capacityMW) as ppsc from pp where pp.fuel="solar"
+  group by pp.country order by ppsc [desc];
+
+
+Usuniêcie tabel
+
+drop table
+----------
