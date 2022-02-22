@@ -1303,9 +1303,32 @@ do wypełnienia tabel są w pliku `fdata200.sql`:
 
 ```
 sqlite3
-.read fschema.sql
+.read fschema200.sql
 .read fdata2000.sql
 ```
+Kilka(naście) minut czekania.
+Przykłady zapytań są w pliku `fqueries.sql`, np.
+
+```
+-- dla opóźnień na lotnisku `odlotowym' (depdel)
+-- wypisz sumę opóźnień, średnie opóźnienie, liczbę lotów oraz kod stanu
+--
+
+select state, avg(depdel), sum(depdel), count(depdel) from flight
+inner join ori on oriid=aid
+group by STATE;
+
+-- jak wyżej ale tylko dla stanów gdzie liczba lotów 10000 i więcej
+--
+
+select state, avg(depdel), sum(depdel), count(depdel) from flight
+inner join ori on oriid=aid
+group by STATE
+having count(depdel) > 9999
+
+```
+
+
 ## Pozyskiwanie wiedzy z baz danych
 
 Najstarszą dyscypliną naukową zajmującą się metodami uczenia się

@@ -1392,8 +1392,26 @@ wszystko śmiga już szybko ale wynikowa baza ma 70Mb czyli dużo. Z tego
 też powodu próbę 2mln ograniczyłem do 200 tys lotów, a stosowne dane do
 wypełnienia tabel są w pliku <code>fdata200.sql</code>:</p>
 <pre><code>sqlite3
-.read fschema.sql
+.read fschema200.sql
 .read fdata2000.sql</code></pre>
+<p>Kilka(naście) minut czekania. Przykłady zapytań są w pliku
+<code>fqueries.sql</code>, np.</p>
+<pre><code>-- dla opóźnień na lotnisku `odlotowym&#39; (depdel)
+-- wypisz sumę opóźnień, średnie opóźnienie, liczbę lotów oraz kod stanu
+--
+
+select state, avg(depdel), sum(depdel), count(depdel) from flight
+inner join ori on oriid=aid
+group by STATE;
+
+-- jak wyżej ale tylko dla stanów gdzie liczba lotów 10000 i więcej
+--
+
+select state, avg(depdel), sum(depdel), count(depdel) from flight
+inner join ori on oriid=aid
+group by STATE
+having count(depdel) &gt; 9999
+</code></pre>
 </div>
 </div>
 <div id="pozyskiwanie-wiedzy-z-baz-danych" class="section level2">
