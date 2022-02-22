@@ -6,7 +6,9 @@
 * Wykład 
   rbd.html  
 
-  Przykład: sp.sqp spq.sql
+* Przykład (części-dostawcy-dostawy): sp.sqp spq.sql
+
+* Przykład (opóźnienia samolotów): fdata200.sql fschema200.sql fd200.db fqueries.sql 
 
 * Pozyskiwanie danych/reguły asocjacyjne
   arules.html
