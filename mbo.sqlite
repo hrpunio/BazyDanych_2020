@@ -1,0 +1,37 @@
+DROP table if exists SHOP;
+DROP table if exists PROD;
+DROP table if exists DATE;
+DROP table if exists TRAN;
+
+CREATE TABLE shop (
+  sid INTEGER,
+  name CHAR NOT NULL,
+  kierownik CHAR NOT NULL,
+  primary key (sid)
+);
+
+CREATE TABLE PROD (
+  name CHAR NOT NULL,
+  pid INTEGER,
+  price DECIMAL(6,2),
+  primary key (pid)
+);
+
+CREATE TABLE DATE (
+  dateid CHAR(8),
+  date CHAR(10),
+  dow INTEGER,
+  primary key (dateid)
+);
+
+CREATE TABLE TRAN (
+  iid INTEGER,
+  tid INTEGER,
+  did CHAR(8),
+  sid INTEGER,
+  pid INTEGER,
+  primary key (iid)
+);
+
+--mode csv
+--.import mbo_shops.csv SHOP
