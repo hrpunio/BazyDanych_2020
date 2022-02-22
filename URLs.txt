@@ -1,0 +1,33 @@
+https://github.com/TazzerLabs/Winery_Database
+https://github.com/Sundorius/Wines-Of-Crete/tree/main/SQL%20Files
+https://github.com/jtsou/SQL-with-Wine
+
+https://github.com/deesteban/a-simple-shop
+
+https://github.com/mirastroie/Wine-Store-in-PL-SQL
+
+
+###
+https://rpubs.com/ammtomi/732722
+
+https://rpubs.com/eosowska/
+https://www.codeproject.com/Articles/652108/Create-First-Data-WareHouse
+https://www.guru99.com/fact-table-vs-dimension-table.html
+
+
+data warehouse dimensions facts introduction site:github.com
+-----------------
+
+https://github.com/mayorcoded/udacity-dend-capststone
+
+
+Niezłe wprowdzenie
+https://github.com/Aafreen29/DataWarehouse-Design
+
+ETL = 
+https://github.com/devindatt/Data-Warehouse-in-AWS
+
+------------------
+https://cloudbi.pl/wprowadzenie-do-azure-data-warehouse-krotka-teoria-hurtowni-danych/
+https://cloudbi.pl/proces-etl-dlaczego-zaden-system-bi-nie-moze-bez-niego-istniec/
+https://www.stat.cmu.edu/~ryantibs/statcomp-F18/lectures/databases.html

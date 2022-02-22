@@ -1,0 +1,176 @@
+---
+title: "SQLite3: ściąga"
+author: "Tomasz Przechlewski"
+date: "16-02-2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### DDL
+
+`CREATE TABLE` -- definiuje nazwę tabeli oraz nazwy i typ każdej kolumny
+
+```
+CREATE TABLE table_name (
+  column_name columnType columnCconstraint,
+  [...,]
+  table_constraints, [...,]   )
+```
+
+ColumnType: `TEXT`, `NUMERIC`, `INTEGER`, `REAL`, `BLOB`
+
+ColumnConstraint:
+
+`NOT NULL` -- kolumna nie może mieć `NULL`.
+
+`DEFAULT (v)` -- domyślna wartość dla kolumny (jeżeli nie podano).
+
+`UNIQUE` -- wszystkie wartości w kolumnie muszą być różne.
+
+`PRIMARY KEY` -- klucz główny tabeli.
+
+`CHECK (wyrażenie)` -- dodatkowe warunki na wartości w kolumnie.
+	  
+```
+-- SALARY musi być większe od zera
+SALARY REAL CHECK(SALARY > 0)
+```
+
+TableConstraint
+
+`UNIQUE (c1, c2...)`
+    
+`PRIMARY KEY(c1, c2...)`
+    
+`CHECK (SALARY > 0)`
+
+Uwaga dotycząca autoinkrementacji
+
+Domyślnie każdy wiersz w SQLite ma specjalną kolumnę, zwykle nazywaną
+`rowid`, który jednoznacznie identyfikuje ten wiersz w obrębie tablicy.
+Jednak jeśli wyrażenie `WITHOUT ROWID` zostanie dodane na końcu
+`CREATE TABLE`, to wtedy specjalna kolumna `rowid` będzie
+pominięty. Za każdym razem, gdy tworzona jest tabela
+bez określenia `WITHOUT ROWID`, to powstaje tabele
+zawierająca niejawną (w sensie, nie wyświetlaną ale istniejącą)
+kolumnę auto-inkrementacji o nazwie `rowid`.
+
+```
+CREATE TABLE people (   
+  first_name TEXT NOT NULL,  last_name TEXT NOT NULL );
+  INSERT INTO people (first_name, last_name) VALUES ('John', 'Doe');
+  SELECT rowid, first_name, last_name FROM  people;
+```
+
+### DML (Manipulation):  `INSERT`, `UPDATE`, `DELETE`
+
+```
+INSERT INTO table (column1, column2 ,..)
+   VALUES( value1,    value2 ,...);
+```
+
+Część `(column1, column2 ,..)` jest opcjonalna; jeżeli
+wstawiamy wartości do wszystkich kolumn wiersza w szczególności.
+
+
+### DQL (Query): `SELECT`
+
+```
+ SELECT [DISTINCT] selectHeading
+   FROM table, table
+   WHERE filterExpression
+   GROUP BY groupingExpression
+       HAVING filterExpression
+   ORDER BY orderingEexpression
+   LIMIT count
+```
+
+selectHeading -- określa jakie kolumny (wyrażenia zawierające
+kolumny) albo agregaty mają być wypisane
+
+`HAVING` filterExpression -- określa warunki (filtry)
+dla danych pogrupowanych  (wymaga klauzuli `GROUP BY`)
+   
+`DISTINCT` -- usuwa powtórzenia
+
+### Aliasy
+
+```
+SELECT o.OrderID, o.OrderDate, c.CustomerName
+FROM Customers AS c, Orders AS o
+WHERE c.CustomerName="Around the Horn" AND c.CustomerID=o.CustomerID;
+
+SELECT CustomerID AS ID, CustomerName AS Customer
+FROM Customers;
+```
+
+### `JOINS`
+
+```
+  SELECT Title, Name FROM albums
+  INNER JOIN artists ON artists.ArtistId = albums.ArtistId;
+
+--  z użyciem aliasów (l, r)
+  
+  SELECT l.Title, r.Name FROM albums l
+  INNER JOIN artists r ON r.ArtistId = l.ArtistId
+```
+
+### Podzapytania
+
+Podzapytanie to polecenie `SELECT` wewnątrz innego polecenia:
+
+```
+SELECT column_1
+FROM table_1
+WHERE column_1 = (
+   SELECT column_1 
+   FROM table_2
+);
+```
+
+Podzapytanie jest wewnątrz pary nawiasów okrągłych.
+
+Zazwyczaj podzapytanie powinno zwrócić pojedynczy wiersz żeby miało
+sens, chociaż może także zwrócić wiele wierszy (wartości)
+porównywanych operatorem `IN`.
+
+Można użyć podzapytania
+w klauzulach `SELECT`, `FROM`, `WHERE` i `JOIN`.
+
+### Polecenia konsoli (nie SQL)
+
+```
+.databases -- wypisz bazy 
+.read FILE.sql -- wykonaj SQL z pliku FILE.sql
+.q -- zakończ
+.tables -- wypisz kolumny
+```
+
+### Opcje wypisywania wyników
+
+```
+.header on -- wypisuj nazwy kolumn
+.mode (list|csv|insert) -- format wynikowy
+.separator "x" -- znak separujący
+```
+
+### Zapis do pliku
+
+```
+.mode list
+.separator ';'
+.output PLIK albo .once (tylko nast. polecenie)
+```
+
+### CSV Import
+
+``
+.mode csv
+.separator ';'
+.import PLIK tabela
+```
+
