@@ -191,25 +191,25 @@ do używanego DBMS
 
 • **Projektowanie fizyczne**
 
-* Tworzenie strukturur potrzebnych do sprawnego przechowywania/zarządzania
+* Tworzenie struktur potrzebnych do sprawnego przechowywania/zarządzania
   danymi w konkretnym DBMS (Zależy od używanego sprzętu i oprogramowania DBMS)
 
 • **Przykład: DBA dla Bank of America**
 
-* Specyfikacja wymagań
+* Specyfikacja wymagań:
   Określ wymagania klientów (Baza danych do
 przechowywać informacje o klientach, rachunkach, pożyczkach,
 oddziały, transakcje, ...)
 
-*  Projekt koncepcyjny
+*  Projekt koncepcyjny:
  Wyraź wymagania klienta w zakresie modelu E/R; 
  Potwierdź z klientami, że wymagania są prawidłowe;
  Określ wymagane operacje na danych
  
-*  Logiczny projekt
+*  Projekt logiczny:
  Konwertuj model E/R na relacyjny, lub inny
 
-• Projekt fizyczny
+* Projekt fizyczny:
   Wykonaj konkretny system np z wykorzystaniem SQLite
 
 
@@ -294,9 +294,9 @@ po stronie wiele.
 
 ## Podstawy diagramów ER 
 
-Z istniejących wiele sposóbów diagramów ER. Opiszemy tylko
+Z istniejących wiele wariantów diagramów ER opiszemy tylko
 jeden zwany 
-notacją Martina (https://pl.wikipedia.org/wiki/Notacja_Martina)
+**notacją Martina** (https://pl.wikipedia.org/wiki/Notacja_Martina)
 
 ![](./ER_diagram.png)
 W zasadzie wszystko widać. Encja może być określona bez atrybutów
@@ -332,55 +332,31 @@ w programie LucidChart (https://www.youtube.com/watch?v=QpdhBUYk7Kk)
 
 ## Normalizacja
 
-Anomalie danych
+### Anomalie danych
 
-**redundancja** (nadmiarowość) – przechowywania tej samej informacji w
+* **redundancja** (nadmiarowość) – przechowywania tej samej informacji w
 kilku krotkach
 
-**anomalia wprowadzania** – wprowadzenie pewnej informacji wymaga
+* **anomalia wprowadzania** – wprowadzenie pewnej informacji wymaga
 jednoczesnego wprowadzenia innej informacji
 
-**anomalia modyfikacji** – modyfikacja informacji dokonywana jest w
+* **anomalia modyfikacji** – modyfikacja informacji dokonywana jest w
 pewnych krotkach a w innych nie
 
-**anomalia usuwania** – usunięcie części informacji powoduje utracenie innych informacji
+* **anomalia usuwania** – usunięcie części informacji powoduje utracenie innych informacji
 
-Anomalie danych -- przykład:
+### Trochę teorii (ale nie za dużo)
 
-```
-Sklep     Adres                 Artykuł Cena
-Żabka     ul. Czarnowiejska 37  masło   3.80
-Lewiatan  ul. Mazowiecka 28     masło   4.00
-Jubilat   ul. Głowackiego 30    mleko   2.50
-Żabka     ul. Czarnowiejska 37  mleko   2.70
-```
-
-* redundancja – adresy i nazwy sklepów występują wielokrotnie
-
-* anomalia wprowadzania – wprowadzenie artykułu wymaga wprowadzenia
-adresu sklepu
-
-* anomalia modyfikacji – zmiana adresu sklepu musi być wprowadzana we
-wszystkich krotkach
-
-* anomalia usuwania – usunięcie wszystkich artykułów danego sklepu
-powoduje usunięcie wszystkich danych sklepu
-
-Relacja jest matematycznym pojęciem abstrakcyjnym odpowiadającym
+* **Relacja** jest abstrakcyjnym pojęciem matematycznym odpowiadającym
 tabeli w relacyjnym modelu danych. Schematem relacji nazywamy:
-
-```
-R = {A1, A2, ... An}
-```
-
+`R = {A1, A2, ... An}`
 gdzie `A1`, `A2`, ... `An` są atrybutami (nazwami kolumn); każdemu
 atrybutowi  `A` przyporządkowana jest  dziedzina `D(A)` czyli
 zbiór dopuszczalnych wartości dla atrybutu `A`.
 
+* Krotka (*tuple*) to wiersz w tabeli danych.
 
-Krotka (*tuple*) to wiersz w tabeli danych.
-
-Relacja `r` o schemacie `R={A1, A2, ... An}` spełnia
+* Relacja `r` o schemacie `R={A1, A2, ... An}` spełnia
 **zależność funkcyjną** `X → Y`  (gdzie `X`, `Y` są
 podzbiorami (atrybutów) `R`),  jeżeli dla każdych dwóch krotek (wierszy)
 `p`, `q` spełniony jest warunek: jeżeli `p[X] = p[Y]` to `q[X] = q[Y]`;
@@ -388,7 +364,7 @@ czyli
 wartości zbioru atrybutów `X` determinują jednoznacznie wartości
 atrybutów `Y` (ale nie odwrotnie)
 
-**Nadkluczem** relacji `r` o schemacie `R={A1, A2, ... An}`
+* **Nadkluczem** relacji `r` o schemacie `R={A1, A2, ... An}`
 nazywamy każdy dowolny zbiór atrybutów `X` z `R`, taki że
 `X → R`. Powyższe oznacza, że wartości atrybutów `X`
 jednoznacznie identyfikują wszystkie krotki relacji `r`
@@ -396,169 +372,216 @@ o schemacie `R`. Innymi słowy, w żadnej relacji `r` o
 schemacie `R` nie istnieją dwie krotki `p`, `q` takie, że `q[X] = p[X]`.
 Jednym z nadkluczy jest cały wiersz oczywiście.
 
-**Kluczem** relacji `r` o schemacie `R={A1, A2, ... An}`
+* **Kluczem** relacji `r` o schemacie `R={A1, A2, ... An}`
 nazywamy każdy **minimalny nadklucz**, tj taki który nie zawiera w sobie
 żadnego innego nadklucz w sensie że usunięcie z niego atrybutu skutkuje
-tym że przestaje identyfikować wiersz.
+tym że przestaje identyfikować wiersz. Atrybuty `A1...An` nazywamy
+**kluczowymi** (pozostałe są **niekluczowe**).
 
-atrybut `A` jest podstawowy w
-schemacie `R` jeżeli należy do któregokolwiek z kluczy
-schematu `R`; atrybut `A` jest **wtórny** w schemacie `R`
-jeżeli nie należy do żadnego z kluczy schematu `R`
+### Postacie normalne BD:
 
-Pierwsza postać normalna: schemat relacji `R` znajduje się
+* **Pierwsza postać normalna**: schemat relacji `R` znajduje się
 w pierwszej postaci
 normalnej(1NF), jeżeli wartości  atrybutów są atomowe
 (niepodzielne)
 
-```
-+--------------------------------------------------------+
-| Faktura/Numer: 123/15   Data: 2015-09-20               |
-| NumerKlienta: 125    Nazwa: Zakład Mechaniczny Tamech  |
-| Adres klienta: Kwidzyn, ul. Fabryczna 5                |
-+--------------------------------------------------------+
-| Numer Kod towaru         Nazwa   Cena Ilość Wartość    |
-+--------------------------------------------------------+
-| 1      SM210          śruba M10   30   2     60        |
-| 2      PM210      podkładka M10   30   1     30        |
-| 3      NM210       nakrętka M10   35   2     70        |
-+--------------------------------------------------------+
-| Suma 160                                               |
-+--------------------------------------------------------+
-```
 
-Faktura znormalizowana do 1NF
-
-```
-Faktura = {#Nr_faktury,  Data, NumerKlienta, Nazwa, Adres,
-  Nr Kod_towaru, Nazwa_towaru, Cena, Ilość, Wartość, Suma }
-```
-
-Zależność funkcyjna (FD)
-Dana jest relacja `r` o schemacie `R`. `X`, `Y` są podzbiorami
-atrybutów `R`. W schemacie relacji `R`,
-`Y` **jest funkcyjnie zależny** od `X`, co
-zapisujemy `X → Y`, wtedy i tylko wtedy, jeżeli dla dwóch
-dowolnych krotek `p`, `q` takich że `p[X] = q[X]`
-zachodzi `p[Y] = q[Y]`.
-
-Zbiór atrybutów `Y` jest **w pełni** funkcyjnie zależny od zbioru atrybutów
-`X` w schemacie `R`, jeżeli `X → Y` i nie istnieje podzbiór
-`X’ ⊂ X` taki, że `X’ → Y`
-
-Zbiór atrybutów `Y` jest częściowo funkcyjnie zależny od zbioru
-atrybutów `X` w schemacie `R`,
-jeżeli `X → Y` i istnieje podzbiór
-`X’ ⊂ X` taki, że `X’ → Y`.
-
-**Druga postać normalna**: Dana relacja `r` o schemacie `R` jest
+* **Druga postać normalna**: Dana relacja `r` o schemacie `R` jest
 w drugiej postaci normalnej (2NF),
-jeżeli żaden **atrybut wtórny** tej relacji nie jest częściowo funkcyjnie
-zależny od żadnego z kluczy relacji `r`. 
-
-Rozważmy następujący przykład ilustrujący definicję drugiej postaci normalnej.
-Dana
-jest relacja `Uczestnictwo` składająca się z atrybutów:
-`IdPrac`, `NrProj`, `Funkcja`, `Nazwisko`, `NazwaProj`, `Lokalizacja`:
-
-```
-Uczestnictwo = {IdPrac, NrProj, Funkcja, Nazwisko, NazwaProj, Lokalizacja}
-```
-
-Relacja `Uczestnictwo` opisuje udział pracowników
-o identyfikatorze (`IdPrac`) w realizacji projektów o numerze `NrProj`.
-Kluczem schematu
-relacji `Uczestnictwo` jest para atrybutów `IdPrac` i `NrProj`.
-
-Zauważmy, że w schemacie relacji `Uczestnictwo` występuje
-7 zależności funkcyjnych `fd1`, ..., `fd7`.
-Rozpatrujemy tylko zależności pomiędzy kluczami złożonymi (dwie lub więcej
-kolumn.) Zależności `fd2`, `fd3`, `fd4` są zależnościami niepełnymi
-
-```
-fd1: {IdPrac, NrProj} → Funkcja
-fd2: {IdPrac, NrProj} → Nazwisko
-fd3: {IdPrac, NrProj} → NazwaProj
-fd4: {IdPrac, NrProj} → Lokalizacja
-fd5: {IdPrac} → Nazwisko
-fd6: {NrProj} → NazwaProj
-fd7: {NrProj} → Lokalizacja
-```
-
-Zależności `fd2`, `fd3`, `fd4` są zależnościami niepełnymi.
-Przykładowo, zależność funkcyjna
-`fd2: {IdPrac, NrProj} → Nazwisko` jest częściową zależnością
-funkcyjną gdyż istnieje podzbiór lewej strony zależności funkcyjnej
-(`IdPrac`), który
-wyznacza funkcyjnie prawą stronę zależności.
-Podobnie jest w przypadku zależności
-`fd3` i `fd4`. Łatwo zauważyć, że schemat relacji uczestnictwo
-nie jest w 2NF, gdyż
-istnieją atrybuty wtórne (Nazwisko, NazwaProj, Lokalizacja), które są częściowo
-zależne od klucza.
-
-tabele powinny przechowywać informacje o tylko jednej *rzeczy*,
-opisywaną w całości przez jej klucz główny
-
+jeżeli wszytkie **atrybuty niekluczowe** są w pełni zależne od całego
+klucza głównego (`PK`) a nie mogą być zależne od części klucza głównego.
+(Uwaga:
 tabela będąca w 1NF może nie być w 2NF tylko jeśli posiada złożony
-klucz główny
+klucz główny)
 
-```
-----------------
-# Numer faktury
-Data wystawienia
-Nr klienta
-Nazwa klienta
-Adres klienta
-Suma
 
-----------------
-# Numer faktury
-# Numer pozycji
-Kod towaru
-Nazwa
-Cena
-Ilość
-Wartość
-```
-
-**Trzecia postać normalna**:
-
-Dana relacja `r` o schemacie `R` jest w trzeciej postaci
-normalnej (3NF), jeżeli dla każdej zależności funkcyjnej
-`X → A` w `R` spełniony jest jeden z następujących
-warunków: – `X` jest nadkluczem schematu `R`, lub
-– `A` jest atrybutem podstawowym schematu `R`
-
+* **Trzecia postać normalna**:
 Relacja jest w trzeciej postaci normalnej wtedy i tylko wtedy, gdy
 jest w drugiej postaci normalnej
-i każdy niekluczowy atrybut jest
-bezpośrednio, a nie przechodnio, zależny od klucza głównego.
+i każdy niekluczowy atrybut jest zależny
+jedynie od klucza głównego tabeli a brak jest 
+jakichkolwiek zależności pomiędzy atrybutami niekluczowymi.
+
+* są jeszcze postacie 4 i 5 ale większość normalizacji w praktyce
+kończy się na 3.
+
+### Przykład
+
+**0NF (tabela nieznormalizowana)**
+
+Kolumny `nr_przed` (numer/identyfikator przedmiotu), 
+`przedmiot`, `ocena` oraz `data` nie zawierają
+wartości atomowych; `nr_` to numer wydziału, `wydział` to nazwa wydziału
 
 ```
-----------------
-# Numer faktury
-Data wystawienia
-Nr klienta
-Suma
+OCENY_STUDENTÓW
++------------------------------------------------------------------------------------+
+imię    | nazwisko | nrw | wydział | indeks | nr_przed | przedmiot    | ocena | data |
++-------+----------+-----+---+-----+--+-----+----+-----+--------------+-------+------+
+Ula     | Kowalska |  E1 |  Eko    |  001   |  P1      | Przedmiot1   |  5    |  x   |
+        |          |     |         |        |  P2      | Przedmiot2   |  4    |  y   |
+        |          |     |         |        |  P3      | Przedmiot3   |  4    |  z   |
+Ewelina | Dębska   |  E1 |  Eko    |  009   |  P1      | Przedmiot1   |  5    |  x   |
+        |          |     |         |        |  P2      | Przedmiot2   |  4    |  y   |
+        |          |     |         |        |  P4      | Przedmiot4   |  3    |  z   |
+Ewa     | Kluge    |  L1 |  Logi   |  112   |  P12     | Przedmiot12  |  5    |  z   |
++-------+----------+-----+---+-----+--+-----+----+-----+--------------+-------+------+
 
-----------------
-# Numer faktury
-# Numer pozycji
-Kod towaru
-Ilość
-Wartość
-
----------------
-# Nr klienta
-Nazwa klienta
-Adres klienta
-
----------------
-# Kod towaru
-Nazwa
-Cena
 ```
+Takie coś na siłę (vel *na chama*) może być wstawione do relacyjnej bazy danych,
+np oddzielając wartości atomowe w kolumnach 
+`nr_przed`, `przedmiot`, `ocena` oraz `data` jakimś umownym znakiem, np `+`
+oraz definiując sztuczny klucz główny typu `numer_porządkowy`. Przydatność
+takiego czegoś w praktyce jest jednak żadna.
+
+**1NF**
+
+Kolumny `nr_przed`, `przedmiot`, `ocena` oraz `data` zawierają
+wartości atomowe, ale występuje redundancja danych
+
+```
+OCENY_STUDENTÓW
++------------------------------------------------------------------------------------+
+imię    | nazwisko | nrw | wydział | indeks*| nr_przed*| przedmiot    | ocena | data |
++-------+----------+-----+---+-----+--+-----+----+-----+--------------+-------+------+
+Ula     | Kowalska |  E1 |  Eko    |  001   |  P1      | Przedmiot1   |  5    |  x   | 
+Ula     | Kowalska |  E1 |  Eko    |  001   |  P2      | Przedmiot2   |  4    |  y   | 
+Ula     | Kowalska |  E1 |  Eko    |  001   |  P3      | Przedmiot3   |  4    |  z   |
+Ewelina | Dębska   |  E1 |  Eko    |  009   |  P1      | Przedmiot1   |  5    |  x   |
+Ewelina | Dębska   |  E1 |  Eko    |  009   |  P2      | Przedmiot2   |  4    |  y   |
+Ewelina | Dębska   |  E1 |  Eko    |  009   |  P4      | Przedmiot4   |  3    |  z   |
+Ewa     | Kluge    |  L1 |  Logi   |  112   |  P12     | Przedmiot12  |  5    |  z   |
++-------+----------+-----+---+-----+--+-----+----+-----+--------------+-------+------+
+```
+Kolumny oznaczone znakiem `*` tworzą klucz główny (bo kombinacje student-przedmiot są
+faktycznie unikatowe z definicji). Ale i niestety łatwo wskazać następujące anomalia: 
+
+redundancja –  nazwy/nazwiska występują wielokrotnie
+
+anomalia wprowadzania – wprowadzenie danych nt studenta wymaga podania co najmniej
+jednego przedmiotu (którego jeszcze nie zdał)
+
+anomalia modyfikacji – zmiana nazwiska p. Dębskiej na Kwiatkowską
+musi być wprowadzana we wszystkich krotkach w których występuje Dębska
+
+anomalia usuwania – usunięcie wszystkich przedmiotów, z których ma ocenę studentka 
+Kluge może skutkować usunięciem wszystkich danych tego studenta
+
+
+**2NF (pierwsze podejście)**
+
+dzielimy tablę na dwie `STUDENCI` oraz `OCENY`
+
+```
+STUDENCI
++-------------------------------------------+
+imię    | nazwisko | nrw | wydział | indeks*|
++-------+----------+-----+---+-----+--+-----+
+Ula     | Kowalska |  E1 |  Eko    |  001   |
+Ewelina | Dębska   |  E1 |  Eko    |  009   |
+Ewa     | Kluge    |  L1 |  Logi   |  112   |
+Józef   | Hyc      |  L1 |  Logi   |  115   |
++-------+----------+-----+---+-----+--+-----+
+
+OCENY
++--------+----------+--------------+-------+------+
+| indeks*| nr_przed*| przedmiot    | ocena | data |
++--------+----+-----+--------------+-------+------+
+|  001   |  P1      | Przedmiot1   |  5    |  x   |
+|  001   |  P2      | Przedmiot2   |  4    |  y   |
+|  001   |  P3      | Przedmiot3   |  4    |  z   |
+|  112   |  P1      | Przedmiot1   |  5    |  x   |
+|  112   |  P2      | Przedmiot2   |  4    |  y   |
+|  112   |  P4      | Przedmiot4   |  3    |  z   |
+|  115   |  P12     | Przedmiot12  |  5    |  z   |
++--------+-----+--------------+-------+------+
+```
+
+Zwróćmy uwagę że w tabeli `STUDENCI` pojawił się `Józef Hyc`, który jeszcze
+nic nie zdał. Jedna anomalia została rozwiązana.
+
+Klucz główny w tabeli OCENY to `indeks+nr_przedmiotu` (oznaczone `*`).
+Istnieje zależność funkcyjna  `nr_przed → przedmiot` (atrybut niekluczowy
+zależy od części klucza głównego)
+
+
+**2NF (drugie podejście; usunięcie zależności funkcyjnej 
+`nr_przed → przedmiot)`**
+
+
+```
+STUDENCI
++-------------------------------------------+
+imię    | nazwisko | nrw | wydział | indeks*|
++-------+----------+-----+---+-----+--+-----+
+Ula     | Kowalska |  E1 |  Eko    |  001   |
+Ewelina | Dębska   |  E1 |  Eko    |  009   |
+Ewa     | Kluge    |  L1 |  Logi   |  112   |
+Józef   | Hyc      |  L1 |  Logi   |  115   |
++-------+----------+-----+---+-----+--+-----+
+
+OCENY
++--------+----------+-------+------+
+| indeks*| nr_przed*| ocena | data |
++--------+----+-----+--------------+
+|  001   |  P1      |  5    |  x   |
+|  001   |  P2      |  4    |  y   |
+|  001   |  P3      |  4    |  z   |
+|  112   |  P1      |  5    |  x   |
+|  112   |  P2      |  4    |  y   |
+|  112   |  P4      |  3    |  z   |
+|  115   |  P12     |  5    |  z   |
++--------+----------+-------+------+
+
+PRZEDMIOTY
++----------+--------------+-----+-------------------+
+| nr_przed*| przedmiot    | typ | godziny | sylabus |
++----+-----+--------------+-----+-------------------+
+|  P1      | Przedmiot1   |  W  |   15    | ...     |
+|  P2      | Przedmiot2   |  W  |   15    | ...     |
+|  P3      | Przedmiot3   |  K  |   20    | ###     |
+|  P4      | Przedmiot4   |  K  |   18    | ###     |
+|  P12     | Przedmiot12  |  W  |   15    | ...     |
+|  P912    | Przedmiot912 |  C  |   20    | ...     |
++----------+--------------+-----+-------------------+
+```
+Przeniesienie przedmiotów do osobnej tabeli powoduje że opis przedmiotu
+nie powoduje zbędnej redundancji (dodano `typ`, `godziny`, `sylabus`);
+wyobraźmy sobie gdyby przedmiot + opis przechowywać w tabeli
+`OCENY` w 1NF.
+
+**Ale** w tabeli `STUDENCI` atrybuty `nrw` oraz `
+wydział` (oba niekluczowe) są w zależności funkcyjnej co narusza 3NF
+
+
+**3NF**
+
+Wydział i Student to osobne encje. Trzeba je po prostu rozdzielić
+
+```
+STUDENCI
++---------------------------------+
+imię    | nazwisko | nrw | indeks*|
++-------+----------+-----+--------+
+Ula     | Kowalska |  E1 |  001   |
+Ewelina | Dębska   |  E1 |  009   |
+Ewa     | Kluge    |  L1 |  112   |
+Józef   | Hyc      |  L1 |  115   |
++-------+----------+-----+--------+
+
+WYDZIAŁY
++---------------+-------+-----------+
+| nrw*| wydział | adres | adres_www |
++-----+-----+---+-------+-----------+
+|  E1 |  Eko    |  001  | www://1   |
+|  L1 |  Logi   |  115  | www://2   |
++-----+---------+-------+-----------+
+```
+
+tabele `OCENY` oraz `PRZEDMIOTY` są bez zmian. Nareszcie każda encja
+z wyjściowej tabeli 0NF ma swoją własną tabelę (`STUDENT`, `OCENA`, 
+`WYDZIAŁ`, `PRZEDMIOT`.) Co do zasady problemem jest umieszanie
+danych o dwóch encjach w jednej tabeli CND...
 
 ## SQL
 
@@ -658,7 +681,11 @@ MySQL baza bieżąca, to taka do której domyślnie odnoszą się polecenia
 adresujące tabele. Odniesienia do kolumn mogą być postaci: `kolumna`,
 `tabela.kolumna`, `bazadanych.tabela.kolumna`, `tabela@bazadanych.kolumna`.
  
-Każde polecenie SQL kończy się średnikiem;
+**Każde polecenie SQL kończy się średnikiem**. Jeżeli
+zapomnimy wstawić średnik na końcu polecenia, 
+to SQLite przejdzie do nowego wiersza wyświetlając
+znak kontynuuacji `...>`. Po prostu należy dopisać `;` i jeszcze raz
+nacinąć `<ENTER>`.
 
 Wartości napisowe podaje się tak: `"napis"`, lub tak: `'napis'`. Znaki
 `%` i `@` są metaznakami, służącymi do tworzenia wzorców do porównań;
@@ -1399,4 +1426,11 @@ https://www.lucidchart.com/
 * Edytor Markdown do utworzenia dokumentacji
   (np. https://dillinger.io/; albo inny `google: markdown+online+editor`)
 
+## Materiały do zajęć
 
+* https://github.com/hrpunio/BazyDanych_2020 (wykład, 
+dane, przykładowe skrypty itp).  Pobieramy naciskając 
+*zielony guzik* z napisem **Code** następnie wybieramy
+  `Download ZIP`. Wszystko zostanie pobrane jako archiwum ZIP
+  
+  ![](./github_bazydanych_tp.png)
